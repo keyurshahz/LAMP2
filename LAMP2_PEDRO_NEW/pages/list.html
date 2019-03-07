@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<!--
+  Pedro Froes Copyright (c) 2019.
+  -->
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>CSV Upload</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    </link>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/pages/list.html">List</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <br>
+        <br>
+        <h1>Path List</h1>
+        <div class="table table-responsive">
+            <table id="example" class="table table-responsive" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width:70%">Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th style="width:70%">Name</th>
+                        <th>Action</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <br>
+        <br>
+        <hr />
+        <div id="add_data_Modal" class="modal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"> Update Data</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="insert_form">
+                            <input type="hidden" name="pathID" id="pathID" />
+                            <label>Length</label>
+                            <input type="text" name="length" id="length" class="form-control"/>
+                            <br />
+                            <label>Description</label>
+                            <input type="text" name="description" id="description" class="form-control"/>
+                            <br />
+                            <label>Note</label>
+                            <input type="text" name="note" id="note" class="form-control" />
+                            <br />
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="fileId" id="fileId" />
+                        <input type="button" name="insert" id="updatePathButton" value="Update"
+                            class="btn btn-success" />
+                        <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="pathDetails" class="hide">
+            <h1>Path Details</h1>
+            <div id="table">
+                <p>Length</p>
+                <p>Description</p>
+                <p>Note</p>
+            </div>
+
+            <hr />
+            <h3>General</h3>
+            <div class="table table-responsive">
+                <table id="generalPath" class="table table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Distance</th>
+                            <th>Ground Height</th>
+                            <th>Terrain Type</th>
+                            <th>Obstruction Height</th>
+                            <th>Obstruction Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Distance</th>
+                            <th>Ground Height</th>
+                            <th>Terrain Type</th>
+                            <th>Obstruction Height</th>
+                            <th>Obstruction Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div id="add_generalPath_Modal" class="modal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"> Update Data</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="general_path_insert_form">
+                                <input type="hidden" name="dataID" id="dataID" />
+                                <label>Distance</label>
+                                <input type="text" name="distance" id="distance"  class="form-control" />
+                                <br />
+                                <label>Ground Height</label>
+                                <input type="text" name="groundHeight" id="groundHeight" class="form-control">
+                                <br />
+                                <label>Terrain Type</label>
+                                <input type="text" name="terrainType" id="terrainType" class="form-control" />
+                                <br />
+                                <label>Obstruction Height</label>
+                                <input type="text" name="obstructionHeight" id="obstructionHeight" class="form-control">
+                                <br />
+                                <label>Obstruction Type</label>
+                                <input type="text" name="obstructionType" id="obstructionType" class="form-control" />
+                                <br />
+                            </form>
+                        </div>      
+                        <div class="modal-footer">
+                            <input type="hidden" name="fileId" id="fileId" />
+                            <input type="button" name="insert" id="updategeneralPathButton" value="Update" class="btn btn-success" />
+                            <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>End Point</h3>
+            <div class="table table-responsive">
+                <table id="endPoint" class="table table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Point 1</th>
+                            <th>Point 2</th>
+                            <th>Point 3</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Point 1</th>
+                            <th>Point 2</th>
+                            <th>Point 3</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div id="add_end_point_Modal" class="modal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"> Update Data</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="end_point_insert_form">
+                                <input type="hidden" name="pointID" id="pointID" />
+                                <label>Point 1</label>
+                                <input type="text" name="Point1" id="point1" class="form-control" />
+                                <br />
+                                <label>Point 2</label>
+                                <input type="text" name="Point2" id="point2" class="form-control">
+                                <br />
+                                <label>Point 3</label>
+                                <input type="text" name="Point3" id="point3" class="form-control" />
+                                <br />
+            
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="fileId" id="fileId" />
+                            <input type="button" name="insert" id="updateEndPointButton" value="Update" class="btn btn-success" />
+                            <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Mid Point</h3>
+            <div class="table table-responsive">
+                <table id="midpoint" class="table table-responsive" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Point 1</th>
+                            <th>Point 2</th>
+                            <th>Point 3</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Point 1</th>
+                            <th>Point 2</th>
+                            <th>Point 3</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div id="add_mid_point_Modal" class="modal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"> Update Data</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="mid_point_insert_form">
+                                <input type="hidden" name="pointID" id="pointID" />
+                                <label>Point 1</label>
+                                <input type="text" name="Point1" id="point1"  class="form-control" />
+                                <br />
+                                <label>Point 2</label>
+                                <input type="text" name="Point2" id="point2"  class="form-control">
+                                <br />
+                                <label>Point 3</label>
+                                <input type="text" name="Point3" id="point3"  class="form-control" />
+                                <br />
+            
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="fileId" id="fileId" />
+                            <input type="button" name="insert" id="updateMidPointButton" value="Update" class="btn btn-success" />
+                            <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://malsup.github.com/min/jquery.form.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        var generalTable;
+        var table;
+        var endPointTable;
+        var midPointTable;
+        var pathName = "";
+
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "searching": false,
+                "ordering": false,
+                "pagination": false,
+                "pagingType": "full_numbers",
+                "serverSide": true,
+                "ajax": '/src/pathlist.php',
+                "columnDefs": [{
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='select btn btn-success'>Select</button> <button class='reset btn btn-danger'>Reset</button> <button  class='edit btn btn-success' data-toggle='modal' data-target='#add_data_Modal'>Edit</button> "
+                }]
+
+            });
+            intialize();
+
+            $('#example tbody').on('click', 'button.select', function () {
+                var data = table.row($(this).parents('tr')).data();
+                pathName = data[0];
+                $("#pathDetails").addClass('show');
+                getPathData();
+            });
+            $('#example tbody').on('click', 'button.reset', function () {
+                var data = table.row($(this).parents('tr')).data();
+                pathName = data[0];
+                $("#pathDetails").addClass('show');
+                resetPathData();
+            });
+            $('#example tbody').on('click', 'button.edit', function () {
+                var data = table.row($(this).parents('tr')).data();
+                pathName = data[0];
+                tablePathData('edit');
+                console.log("after table pathdata");
+            });
+
+            $("#updatePathButton").on("click", function () {
+                updatePathData();
+            });
+        });
+
+        function intialize() {
+
+            generalTable = $('#generalPath').DataTable({
+                "searching": false,
+                "ordering": false,
+                "pagination": false,
+                "pagingType": "full_numbers",
+                "serverSide": true,
+                "ajax": '/src/pathdetails.php?path_name=' + pathName + '&type=general',
+                "columnDefs": [{
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='update btn btn-success'>Update</button>"
+                }]
+            });
+            $('#generalPath tbody ').on('click', 'button.update', function () {
+                console.log("update general path");
+                //tablePathData('endpoint');
+                generalPathData();
+                console.log("after table pathdata");
+            });
+
+            $("#updategeneralPathButton").on("click", function () {
+                updateGeneralPathData();
+            });
+
+            endPointTable = $('#endPoint').DataTable({
+                "searching": false,
+                "ordering": false,
+                "pagination": false,
+                "pagingType": "full_numbers",
+                "serverSide": true,
+                "ajax": '/src/pathdetails.php?path_name=' + pathName + '&type=endpoint',
+                "columnDefs": [{
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='update btn btn-success'>Update</button>"
+                }]
+            });
+            $('#endPoint tbody ').on('click', 'button.update', function () {
+                console.log("update end point");
+                //tablePathData('endpoint');
+               endPointData();
+                console.log("after table pathdata");
+            });
+
+            $("#updateEndPointButton").on("click", function () {
+                updateEndPointData();
+            });
+
+            midPointTable = $('#midPoint').DataTable({
+                "searching": false,
+                "ordering": false,
+                "pagination": false,
+                "pagingType": "full_numbers",
+                "serverSide": true,
+                "ajax": '/src/pathdetails.php?path_name=' + pathName + '&type=midpoint',
+                "columnDefs": [{
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='update btn btn-success'>Update</button>"
+                }]
+            });
+            $('#midPoint tbody ').on('click', 'button.update', function () {
+                console.log("update mid point");
+                //tablePathData('endpoint');
+                midPointData();
+                console.log("after table pathdata");
+            });
+
+            $("#updateMidPointButton").on("click", function () {
+                updateMidPointData();
+            });
+        }
+
+        function getPathData() {
+            tablePathData('show');
+            generalTable.ajax.url('/src/pathdetails.php?path_name=' + pathName + '&type=general');
+            generalTable.ajax.reload();
+            midPointTable.ajax.url('/src/pathdetails.php?path_name=' + pathName + '&type=midpoint');
+            midPointTable.ajax.reload();
+            endPointTable.ajax.url('/src/pathdetails.php?path_name=' + pathName + '&type=endpoint');
+            endPointTable.ajax.reload();
+
+        }
+
+        function resetPathData() {
+            //give confirmation first, if yes then call this method.
+            var conf = confirm('Are you sure want to reset this record?');
+            if (conf) {
+                $.ajax({
+                    type: "get",
+                    url: "/src/resetpath.php",
+                    data: {
+                        path_name: pathName,
+                    },
+                    success: function (resetInfo) {
+                        alert("Path data is successfuly reseted");
+                        getPathData();
+                    },
+                    error: function (resetInfo) {
+                        alert('error');
+                    }
+                });
+            } else {
+                alert("no");
+            }
+        }
+
+        function tablePathData(type) {
+            console.log("in tablepathdata");
+            $.ajax({
+                type: "get",
+                url: "/src/pathdetails.php",
+                data: {
+                    path_name: pathName,
+                    type: 'details'
+                },
+                success: function (detailsInfo) {
+                    var detailsInfo = $.parseJSON(detailsInfo);
+                    if (type == 'show') {
+                        $("#table").html(
+                            "Length: " + detailsInfo.data[1] + "<br />Description: " + detailsInfo.data[2] + "<br />Note: " + detailsInfo.data[3]
+                        );
+                    } else {
+                        $('#length').val(detailsInfo.data[1]);
+                        $('#description').val(detailsInfo.data[2]);
+                        $('#note').val(detailsInfo.data[3]);
+                        $("#pathID").val(detailsInfo.data[4]);
+                        $("#add_data_Modal").modal();
+                    }
+                },
+            });
+        }
+
+        function endPointData() {
+            console.log("in endPointdata");
+            $.ajax({
+                type: "get",
+                url: "/src/pathdetails.php",
+                data: {
+                    path_name: pathName,
+                    type: 'endpoint'
+                },
+                success: function (endpointInfo) {
+                    var endpointInfo = $.parseJSON(endpointInfo);
+                        console.log("in fetch data end point");
+                        $('#point1').val(endpointInfo.data[0][0]);
+                        $('#point2').val(endpointInfo.data[0][1]);
+                        $('#point3').val(endpointInfo.data[0][2]);
+                        $("#pointID").val(endpointInfo.data[0][3]);
+                        $("#add_end_point_Modal").modal();
+                },
+            });
+        }
+
+        function midPointData() {
+            console.log("in midPointdata");
+            $.ajax({
+                type: "get",
+                url: "/src/pathdetails.php",
+                data: {
+                    path_name: pathName,
+                    type: 'midpoint'
+                },
+                success: function (midpointInfo) {
+                    var midpointInfo = $.parseJSON(midpointInfo);
+                    console.log("in fetch data end point");
+                    $('#point1').val(midpointInfo.data[0][0]);
+                    $('#point2').val(midpointInfo.data[0][1]);
+                    $('#point3').val(midpointInfo.data[0][2]);
+                    $("#pointID").val(midpointInfo.data[0][3]);
+                    $("#add_mid_point_Modal").modal();
+                },
+            });
+        }
+
+        function generalPathData() {
+            console.log("in generalpathdata");
+            $.ajax({
+                type: "get",
+                url: "/src/pathdetails.php",
+                data: {
+                    path_name: pathName,
+                    type: 'general'
+                },
+                success: function (generalInfo) {
+                    var generalInfo = $.parseJSON(generalInfo);
+                    console.log("in fetch data end point");
+                    $('#distance').val(generalInfo.data[0][0]);
+                    $('#groundHeight').val(generalInfo.data[0][1]);
+                    $('#terrainType').val(generalInfo.data[0][2]);
+                    $("#obstructionHeight").val(generalInfo.data[0][3]);
+                    $("#obstructionType").val(generalInfo.data[0][4]);
+                    $("#dataID").val(generalInfo.data[0][5]);
+                    $("#add_generalPath_Modal").modal();
+                },
+            });
+        } 
+
+        function updatePathData() {
+            console.log("in update path data");
+            console.log("in submit");
+            var pathID = $('#pathID').val();
+            var length = $('#length').val();
+            var descrip = $('#description').val();
+            var note = $('#note').val();
+            $.ajax({
+                url: "/src/updatedetails.php",
+                type: "post",
+                data: {
+                    type: 'details',
+                    length: length,
+                    descrip: descrip,
+                    note: note,
+                    pathID: pathID,
+                },
+                success: function (data) {
+                    $('#insert_form')[0].reset();
+                    $('#add_data_Modal').modal('hide');
+                }
+            });
+        }
+
+        function updateEndPointData() {
+            console.log("in update end point data");
+            console.log("in submit");
+            var pointID = $('#pointID').val();
+            var point1 = $('#point1').val();
+            var point2 = $('#point2').val();
+            var point3 = $('#point3').val();
+            $.ajax({
+                url: "/src/updatedetails.php",
+                type: "post",
+                data: {
+                    type: 'endpoint',
+                    point1: point1,
+                    point2: point2,
+                    point3: point3,
+                    pointID: pointID
+                },
+                success: function (data) {
+                    $('#end_point_insert_form')[0].reset();
+                    $('#add_end_point_Modal').modal('hide');
+                }
+            });
+        }
+
+        function updateMidPointData() {
+            console.log("in update mid point data");
+            console.log("in submit");
+            var pointID = $('#pointID').val();
+            var point1 = $('#point1').val();
+            var point2 = $('#point2').val();
+            var point3 = $('#point3').val();
+            $.ajax({
+                url: "/src/updatedetails.php",
+                type: "post",
+                data: {
+                    type: 'midpoint',
+                    pointID: pointID,
+                    point1: point1,
+                    point2: point2,
+                    point3: point3 
+                },
+                success: function (data) {
+                    $('#mid_point_insert_form')[0].reset();
+                    $('#add_mid_point_Modal').modal('hide');
+                }
+            });
+        }
+
+        function updateGeneralPathData() {
+            console.log("in update general path data");
+            console.log("in submit");
+            var dataID = $('#dataID').val();
+            var distance = $('#distance').val();
+            var groundHeight = $('#groundHeight').val();
+            var terrainType = $('#terrainType').val();
+            var obstructionHeight = $('#obstructionHeight').val();
+            var obstructionType = $('#obstructionType').val();
+            $.ajax({
+                url: "/src/updatedetails.php",
+                type: "post",
+                data: {
+                    type: 'general',
+                    distance: distance,
+                    groundHeight: groundHeight,
+                    terrainType: terrainType,
+                    obstructionHeight: obstructionHeight,
+                    obstructionType: obstructionType,
+                    dataID: dataID
+                },
+                success: function (data) {
+                    $('#general_path_insert_form')[0].reset();
+                    $('#add_generalPath_Modal').modal('hide');
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
